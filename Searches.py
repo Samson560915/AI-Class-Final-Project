@@ -1,7 +1,18 @@
 from Node import Node
 
-def a_star(nodes, paths):
-    pass
+def BFS(start, goal):
+    frontier = []
+    visited = set()
+    frontier.append(start)
+    while frontier:
+        curr = frontier.pop(0)
+        visited.add(curr)
+        if curr.x == goal.x and curr.y == goal.y:
+            return(curr.get_path_from_root(start))
+        for child in curr.children:
+            if child not in visited and child not in frontier:
+                frontier.append(child)
+    
 
 def local(points):
     x_avg = 0
@@ -37,6 +48,8 @@ def local(points):
             if d < min:
                 min = d
                 next_point = i
+        temp = nodes[-1]
+        temp.add_child(Node(points[next_point][0], points[next_point][1], cur))
         nodes.append(Node(points[next_point][0], points[next_point][1], cur))
         cur = nodes[-1]
         del points[next_point]
