@@ -18,4 +18,5 @@ nodes = local(points)
 for i in nodes:
     print((i.x,i.y))
 
-draw(nodes)
+paths = nodes #Paths will be a list of tuples of Node objects (start node, end node)
+draw(paths)
