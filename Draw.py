@@ -4,7 +4,8 @@ def draw(paths):
     window = turtle.Screen()
     pen = turtle.Turtle()
     pen.width(5)
-    #pen.speed(10000)
+    pen.hideturtle()
+    pen.speed(1000)
     
     for a in paths:
         pen.penup()
