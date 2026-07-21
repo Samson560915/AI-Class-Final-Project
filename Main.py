@@ -1,6 +1,6 @@
 from Node import Node
 from Searches import BFS, weighted_local
-from Draw import draw, draw_old, get_paths, trace_path
+from Draw import draw, draw_old, get_paths
 import random
 
 def get_points(num):
@@ -22,4 +22,3 @@ paths = get_paths(nodes) #Paths will be a list of tuples of Node objects (start 
 for i in paths:
     print((i[0][0], i[0][1]),(i[1][0], i[1][1]))
 draw(paths)
-trace_path(paths[0][0], paths[-1][0])

@@ -15,7 +15,7 @@ def draw(paths, line_color="black", dot_color="blue"):
         pen.setpos(a[0][0], a[0][1])
         pen.pendown()
         pen.dot(25, dot_color)
-        pen.goto(a[1].x, a[1].y)
+        pen.goto(a[1][0], a[1][1])
         pen.dot(25, dot_color)
 
     window.exitonclick()
@@ -42,11 +42,3 @@ def draw_old(paths):
 
     window.exitonclick()
 
-def trace_path(start, end):
-    path = BFS(start, end)
-
-    paths_taken = []
-    for i in range(len(path) - 1):
-        paths_taken.append((path[i], path[i + 1]))
-    
-    draw(paths_taken, "pink", "red")
