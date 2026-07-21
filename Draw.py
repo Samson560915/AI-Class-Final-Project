@@ -1,17 +1,20 @@
 import turtle
+from Searches import BFS
 
-def draw(paths):
+def draw(paths, line_color="black", dot_color="blue"):
     window = turtle.Screen()
     pen = turtle.Turtle()
+    pen.color(line_color)
     pen.width(5)
+    pen.speed(1000)
     
     for a in paths:
         pen.penup()
         pen.setpos(a[0].x, a[0].y)
         pen.pendown()
-        pen.dot(25, "blue")
+        pen.dot(25, dot_color)
         pen.goto(a[1].x, a[1].y)
-        pen.dot(25, "blue")
+        pen.dot(25, dot_color)
 
     window.exitonclick()
 
@@ -35,3 +38,12 @@ def draw_old(paths):
         pen.dot(25, "blue")
 
     window.exitonclick()
+
+def trace_path(start, end):
+    path = BFS(start, end)
+
+    paths_taken = []
+    for i in range(len(path) - 1):
+        paths_taken.append((path[i], path[i + 1]))
+    
+    draw(paths_taken, "pink", "red")
