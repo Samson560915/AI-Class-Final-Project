@@ -4,6 +4,8 @@ class Node:
         self.y = pos_y
         self.parent = parent
         self.children = []
+        if parent:
+            self.children.append(parent)
     
     def cost(self):
         edge_cost = ((self.parent.x - self.x) ** 2 + (self.parent.y - self.y) ** 2) ** 0.5
