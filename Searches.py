@@ -6,10 +6,12 @@ def BFS(start, goal):
     visited = set()
     frontier.append(start)
     while frontier:
-        curr = heapq.heappop(frontier)[1]
+        curr = heapq.heappop(frontier)
+        if isinstance(curr, tuple):
+            curr = curr[1]
         visited.add(curr)
         if curr.x == goal.x and curr.y == goal.y:
-            return(curr.get_path_from_root(start))
+            return(curr.cost)
         for child in curr.children:
             if child not in visited and child not in frontier:
                 child.cost = curr.cost + child.get_dist(curr)

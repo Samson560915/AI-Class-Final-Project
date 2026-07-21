@@ -24,7 +24,7 @@ class Node:
     def get_path_from_root(self, start):
         node = self
         path = [node]
-        while not node == start:
+        while not node.x == start.x and not node.y == start.y:
             node = node.parent
             path.append(node)
         path.reverse()
