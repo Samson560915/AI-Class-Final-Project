@@ -1,17 +1,19 @@
 from Node import Node
+import heapq
 
 def BFS(start, goal):
     frontier = []
     visited = set()
     frontier.append(start)
     while frontier:
-        curr = frontier.pop(0)
+        curr = heapq.heappop(frontier)[1]
         visited.add(curr)
         if curr.x == goal.x and curr.y == goal.y:
             return(curr.get_path_from_root(start))
         for child in curr.children:
             if child not in visited and child not in frontier:
-                frontier.append(child)
+                child.cost = curr.cost + child.get_dist(curr)
+                heapq.heappush(frontier, (child.cost, child))
     
 
 def weighted_local(points):

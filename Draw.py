@@ -6,11 +6,13 @@ def draw(paths, line_color="black", dot_color="blue"):
     pen = turtle.Turtle()
     pen.color(line_color)
     pen.width(5)
+    pen.hideturtle()
+    pen.speed(1000)
     pen.speed(1000)
     
     for a in paths:
         pen.penup()
-        pen.setpos(a[0].x, a[0].y)
+        pen.setpos(a[0][0], a[0][1])
         pen.pendown()
         pen.dot(25, dot_color)
         pen.goto(a[1].x, a[1].y)
@@ -19,11 +21,12 @@ def draw(paths, line_color="black", dot_color="blue"):
     window.exitonclick()
 
 def get_paths(nodes):
-    paths_list = []
+    paths = set()
     for a in nodes:
         for b in a.children:
-            paths_list.append((a,b))
-    return paths_list
+            if ((a.x,a.y),(b.x,b.y)) not in paths and ((b.x,b.y),(a.x,a.y)) not in paths:
+                paths.add(((a.x,a.y),(b.x,b.y)))
+    return paths
 
 def draw_old(paths):
     window = turtle.Screen()
