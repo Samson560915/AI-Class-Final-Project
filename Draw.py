@@ -1,7 +1,7 @@
 import turtle
 from Searches import BFS
 
-def draw(paths, line_color="black", dot_color="blue"):
+def draw(paths, nodes, line_color="black", dot_color="blue"):
     window = turtle.Screen()
     pen = turtle.Turtle()
     pen.color(line_color)
@@ -10,6 +10,8 @@ def draw(paths, line_color="black", dot_color="blue"):
     pen.speed(1000)
     pen.speed(1000)
     
+    draw_nodes(pen, nodes)
+
     for a in paths:
         pen.penup()
         pen.setpos(a[0][0], a[0][1])
@@ -19,6 +21,12 @@ def draw(paths, line_color="black", dot_color="blue"):
         pen.dot(25, dot_color)
 
     window.exitonclick()
+
+def draw_nodes(pen, nodes, dot_color="green"):
+    for n in nodes:
+        pen.penup()
+        pen.setpos(n.x, n.y)
+        pen.dot(15, dot_color)
 
 def get_paths(nodes):
     paths = set()

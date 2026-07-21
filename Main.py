@@ -21,4 +21,4 @@ for i in nodes:
 paths = get_paths(nodes) #Paths will be a list of tuples of Node objects (start node, end node)
 for i in paths:
     print((i[0][0], i[0][1]),(i[1][0], i[1][1]))
-draw(paths)
+draw(paths, nodes)
