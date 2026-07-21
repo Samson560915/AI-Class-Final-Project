@@ -15,6 +15,13 @@ def draw(paths):
 
     window.exitonclick()
 
+def get_paths(nodes):
+    paths_list = []
+    for a in nodes:
+        for b in a.children:
+            paths_list.append((a,b))
+    return paths_list
+
 def draw_old(paths):
     window = turtle.Screen()
     pen = turtle.Turtle()
