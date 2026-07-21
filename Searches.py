@@ -14,7 +14,7 @@ def BFS(start, goal):
                 frontier.append(child)
     
 
-def local(points):
+def weighted_local(points):
     x_avg = 0
     y_avg = 0
     for a in points:
@@ -44,9 +44,20 @@ def local(points):
         next_point = None
         for i in range(len(points)):
             x, y = points[i]
+            x_avg = 0
+            y_avg = 0
+            for a in points:
+                x1, y1 = a
+                x_avg += x1
+                y_avg += y1
+            x_avg /= len(points)
+            y_avg /= len(points)
             d = ((cur.x - x) ** 2 + (cur.y - y) ** 2) ** 0.5
-            if d < min:
-                min = d
+            #Create a second weight for how far away it is from the average
+            d2 = ((x_avg - x) ** 2 + (y_avg - y) ** 2) ** 0.5
+            weighted_sum = d - 0.25 * d2
+            if weighted_sum < min:
+                min = weighted_sum
                 next_point = i
         temp = nodes[-1]
         temp.add_child(Node(points[next_point][0], points[next_point][1], cur))
