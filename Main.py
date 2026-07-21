@@ -1,5 +1,5 @@
 from Node import Node
-from Searches import a_star, local
+from Searches import BFS, local
 from Draw import draw
 import random
 
