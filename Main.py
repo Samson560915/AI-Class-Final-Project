@@ -12,7 +12,7 @@ def get_points(num):
         s.append((x, y))
     return s
 
-points = get_points(20)
+points = get_points(10)
 
 def get_nodes(num):
     nodes = []
