@@ -1,21 +1,27 @@
 from Node import Node
+import turtle
 import heapq
 
 def BFS(start, goal):
-    frontier = []
+    start.reset_cost()
+    start.parent = None
+    frontier = [start]
     visited = set()
-    frontier.append(start)
     while frontier:
         curr = heapq.heappop(frontier)
         if isinstance(curr, tuple):
             curr = curr[1]
         visited.add(curr)
         if curr.x == goal.x and curr.y == goal.y:
-            return(curr.cost)
+            #print(curr.cost)
+            return(curr.cost, curr.get_path_from_root())
         for child in curr.children:
             if child not in visited and child not in frontier:
+                child.reset_cost()
                 child.cost = curr.cost + child.get_dist(curr)
+                child.parent = curr
                 heapq.heappush(frontier, (child.cost, child))
+    return(float('inf'), None)
     
 
 def weighted_local(points):
