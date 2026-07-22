@@ -1,32 +1,34 @@
 import turtle
+import random
 from Searches import BFS
 
-def draw(paths, nodes, line_color="black", dot_color="blue"):
+def draw(nodes, line_color="black", dot_color="blue"):
+    paths = get_paths(nodes)
+    turtle.colormode(255)
     window = turtle.Screen()
     pen = turtle.Turtle()
-    pen.color(line_color)
-    pen.width(5)
+    #pen.color(line_color)
+    pen.width(1)
     pen.hideturtle()
     pen.speed(1000)
-    pen.speed(1000)
-    
     draw_nodes(pen, nodes)
 
     for a in paths:
+        pen.pencolor(random.randint(1,255),random.randint(1,255),random.randint(1,255))
         pen.penup()
         pen.setpos(a[0][0], a[0][1])
         pen.pendown()
-        pen.dot(25, dot_color)
+        pen.dot(5, dot_color)
         pen.goto(a[1][0], a[1][1])
-        pen.dot(25, dot_color)
+        pen.dot(5, dot_color)
 
     window.exitonclick()
 
-def draw_nodes(pen, nodes, dot_color="green"):
+def draw_nodes(pen, nodes, dot_color="green", dot_size = 15):
     for n in nodes:
         pen.penup()
         pen.setpos(n.x, n.y)
-        pen.dot(15, dot_color)
+        pen.dot(dot_size, dot_color)
 
 def get_paths(nodes):
     paths = set()
