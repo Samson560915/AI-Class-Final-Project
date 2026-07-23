@@ -21,32 +21,27 @@ def add_path(nodes):
     priority, path = heapq.heappop(possible_paths) #Get the highest priority path (remember that it is negative so it is stored as the lowest)
     path[0].add_child(path[1]) #Add the paths 
     path[1].add_child(path[0])
-    priority, path = heapq.heappop(possible_paths)
-    return(-priority)
+    priority, path = heapq.heappop(possible_paths) #Get the second highest priority path
+    return(-priority) #return the priority
 
 #Deletes the worst path
 def del_path(nodes):
-    min = float('inf')
-    second_worst = min
-    node1 = None
-    node2 = None
+    paths_to_delete = []
     for n1 in nodes: 
         for child in n1.children: #Checks all nodes that have direct access to each other to see if our search is able to come up with a good alternate solution in order to delete it
             d = n1.get_dist(child) #Finds the current distance 
             n1.del_child(child) #Deletes the path temporarily
             child.del_child(n1) 
-            curr_d, path = BFS(n1, child) #Checks our paths to see we still have a good solution to get from a to be
+            curr_d, path = BFS(n1, child) #Checks our paths to see we still have a good solution to get from node 1 to node 2
             r = curr_d/d #Calculate ratio
-            second_worst = min
-            if r <= min: #Set worst ratio
-                min = r
-                node1 = n1
-                node2 = child
+            heapq.heappush(paths_to_delete, (r, (n1, child))) #Add the paths to a priority queue based on which one is the worst
             n1.add_child(child) #Re-add the path back in which was deleted on lines 33-34 
             child.add_child(n1)
-    node1.del_child(node2) #Delete the worst path by the ratio
-    node2.del_child(node1)
-    return(second_worst)
+    priority, path = heapq.heappop(paths_to_delete) #get the most useless path
+    path[0].del_child(path[1]) #Delete the worst path by the ratio
+    path[1].del_child(path[0])
+    priority, path = heapq.heappop(paths_to_delete) #get the second most useless path
+    return(priority) #return the priority
 
 
 
