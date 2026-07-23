@@ -21,10 +21,13 @@ def add_path(nodes):
     priority, path = heapq.heappop(possible_paths) #Get the highest priority path (remember that it is negative so it is stored as the lowest)
     path[0].add_child(path[1]) #Add the paths 
     path[1].add_child(path[0])
+    priority, path = heapq.heappop(possible_paths)
+    return(-priority)
 
 #Deletes the worst path
 def del_path(nodes):
     min = float('inf')
+    second_worst = min
     node1 = None
     node2 = None
     for n1 in nodes: 
@@ -34,6 +37,7 @@ def del_path(nodes):
             child.del_child(n1) 
             curr_d, path = BFS(n1, child) #Checks our paths to see we still have a good solution to get from a to be
             r = curr_d/d #Calculate ratio
+            second_worst = min
             if r <= min: #Set worst ratio
                 min = r
                 node1 = n1
@@ -42,6 +46,7 @@ def del_path(nodes):
             child.add_child(n1)
     node1.del_child(node2) #Delete the worst path by the ratio
     node2.del_child(node1)
+    return(second_worst)
 
 
 
