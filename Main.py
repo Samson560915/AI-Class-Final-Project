@@ -26,10 +26,22 @@ nodes = weighted_local(points)
 
 paths = get_paths(nodes) #Paths will be a list of tuples of Node objects (start node, end node)
 
-for i in range(10):
-    for i in range(5):
-        add_path(nodes)
-    del_path(nodes)
+# for i in range(10):
+#     for i in range(5):
+#         add_path(nodes)
+#     del_path(nodes)
+
+should_add = True
+should_del = True
+while should_add or should_del:
+    if should_add:
+        upper = add_path(nodes)
+    if should_del:
+        lower = del_path(nodes)
+    if upper <= 2.5:
+        should_add = False
+    if lower >= 2.5:
+        should_del = False
 
 
 paths = get_paths(nodes)
