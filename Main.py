@@ -1,7 +1,7 @@
 from Node import Node
 from Searches import BFS, weighted_local
 from Draw import draw, get_paths
-from Determine_Path import check_paths, add_path, del_path
+from Determine_Path import check_paths, add_path, del_path, replace_path
 from Code_Tests import test_two
 from Utils import get_points, get_circle_points, get_nodes
 import random
@@ -10,7 +10,7 @@ import math
 
 #points = get_circle_points(20, 300)
 
-points = get_points(50)
+points = get_points(100)
 
 us_metros = [
     (205.750, 37.279),    # New York City
@@ -65,10 +65,18 @@ while (should_add or should_del) and count < len(nodes)*4:
         should_del = True
     count+=1
 
-# paths = get_paths(nodes)
+priority = replace_path(nodes)
+print(priority)
+while priority > 0.6:
+    print("hi")
+    priority = replace_path(nodes)
+    print(priority)
+
 
 #draw(nodes, island_size = 200, islands_num = 3)
 #draw(nodes, background_color = "moccasin", island_size = 0, big_node_size = 0, small_node_size = 0, line_color = "black", random_line_color=True)
-#draw(nodes = nodes, background_color = "white", random_line_color = True, draw_background = False, random_node_color = True)
-draw(nodes, background_color = "white", line_color = "black", draw_background = False, big_node_color = "gray")
+draw(nodes = nodes, background_color = "white", random_line_color = True, draw_background = False, random_node_color = True)
+#draw(nodes, background_color = "white", line_color = "black", draw_background = False, big_node_color = "gray")
 #draw(nodes)
+
+#test_two(1)

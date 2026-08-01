@@ -25,17 +25,19 @@ def draw(nodes, line_color="gray", background_color = "navy", islands_num = 1, i
         pen.pendown()
         pen.setpos(a[1][0], a[1][1])
     if should_draw_nodes:
-        draw_nodes(pen, nodes, small_node_color, small_node_size, random_node_color)
+        draw_nodes(pen, nodes, small_node_color, small_node_size, random_node_color, True)
 
     window.exitonclick()
 
-def draw_nodes(pen, nodes, dot_color="green", dot_size = 15, random_node_color = False):
+def draw_nodes(pen, nodes, dot_color="green", dot_size = 15, random_node_color = False, write_coordinate = False):
     for n in nodes:
         pen.penup()
         pen.setpos(n.x, n.y)
         if random_node_color:
             dot_color = (random.randint(1,255),random.randint(1,255),random.randint(1,255))
         pen.dot(dot_size, dot_color)
+        if write_coordinate:
+            pen.write(f"{n.x}, {n.y}")
 
 def get_paths(nodes):
     paths = set()
