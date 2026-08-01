@@ -43,6 +43,45 @@ def del_path(nodes):
     priority, path = heapq.heappop(paths_to_delete) #get the second most useless path
     return(priority) #return the priority
 
+#make a function that is able to replace paths with better paths
+def replace_path(nodes):
+    replaced_paths = [] #create a priority queue of tuples with two tuples, the path deleted and the path added
+    for n1 in nodes:
+        for child in n1.children: #get all the children of a node
+            to_child = n1.get_dist(child) #find the distance between the child and the original node     
+            for n2 in nodes:
+                not_a_child = True
+                for c in n2.children: # check if n2 is a child of n1 #TODO: add check for if n2 == n1
+                    if c == n1:
+                        not_a_child = False
+                if not_a_child: #if n2 is not a child of n1
+                    pos_dist = n1.get_dist(n2) #get the distance between n2 and n1
+                    if pos_dist < to_child: #make sure that this distance is less than that of the distance between n1 and the child
+                        old_path_length, path = BFS(n1, child) #get the old path length of going from n1 to child
+                        n1.del_child(child) #temporarily replace the path
+                        child.del_child(n1)
+                        n1.add_child(n2)
+                        n2.add_child(n1)
+                        new_path_length, path = BFS(n1, child) #get the new length of going from n1 to child
+                        r = -(old_path_length/new_path_length) #create priority
+                        heapq.heappush(replaced_paths, (r, ((n1, child), (n1, n2)))) #add this "replacement" to a priority queue
+                        n1.add_child(child) #undo the temporary replacement
+                        child.add_child(n1)
+                        n1.del_child(n2)
+                        n2.del_child(n1)
+    priority, path = heapq.heappop(replaced_paths) #get the best possible replacement
+    path[0][0].del_child(path[0][1]) #and push through the replacement
+    path[0][1].del_child(path[0][0])
+    path[1][0].add_child(path[1][1])
+    path[1][1].add_child(path[1][0])
+    priority, temp = heapq.heappop(replaced_paths) #get the priority of the next best replacement
+    print(f"Parent: {path[0][0].x}, {path[0][0].y}, Original Destination: {path[0][1].x}, {path[0][1].y}, New Destination: {path[1][1].x}, {path[1][1].y}")
+    return(-priority) #return the priority (because we made it negative earlier we must change it back)
+                        
+
+
+            
+
 
 
 
