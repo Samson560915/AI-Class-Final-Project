@@ -3,10 +3,10 @@ class Node:
         self.x = pos_x
         self.y = pos_y
         self.parent = parent
-        self.children = []
+        self.children = set()
         self.cost = 0
         if parent:
-            self.children.append(parent)
+            self.children.add(parent)
     
     def cost(self):
         edge_cost = ((self.parent.x - self.x) ** 2 + (self.parent.y - self.y) ** 2) ** 0.5
@@ -19,18 +19,10 @@ class Node:
         return (((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5)
     
     def add_child(self, child):
-        for i in range(len(self.children)):
-            if child == self.children[i]:
-                return False
-        self.children.append(child)
-        return True
+        self.children.add(child)
 
     def del_child(self, child):
-        for i in range(len(self.children)):
-            if child == self.children[i]:
-                del self.children[i]
-                return True
-        return False
+        self.children.discard(child)
     
     def get_path_from_root(self):
         node = self

@@ -1,4 +1,5 @@
 import math
+from Node import Node
 import random
 
 def get_circle_points(num_points=20, radius=1.0, center=(0, 0)):

@@ -74,4 +74,4 @@ def weighted_local(points):
         cur = nodes[-1] #go on to the next node
         del points[next_point] #delete the used point from the list
 
-    return nodes #return the list of nodes
+    return set(nodes) #return the list of nodes
