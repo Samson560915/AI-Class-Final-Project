@@ -16,16 +16,17 @@ def check_paths(nodes):
     return(possible_paths) 
 
 #Adds the best path to maximize priority
-def add_path(nodes):
+def add_path(nodes, limit = 3.1, use_limit = False):
     possible_paths = check_paths(nodes) #Find possible paths to add
     priority, path = heapq.heappop(possible_paths) #Get the highest priority path (remember that it is negative so it is stored as the lowest)
-    path[0].add_child(path[1]) #Add the paths 
-    path[1].add_child(path[0])
-    priority, path = heapq.heappop(possible_paths) #Get the second highest priority path
-    return(-priority) #return the priority
+    if (-priority >= limit and use_limit) or not use_limit:
+        path[0].add_child(path[1]) #Add the paths 
+        path[1].add_child(path[0])
+        return True
+    return False
 
 #Deletes the worst path
-def del_path(nodes):
+def del_path(nodes, limit = 3.1, use_limit = False):
     paths_to_delete = []
     for n1 in nodes: 
         for child in n1.children: #Checks all nodes that have direct access to each other to see if our search is able to come up with a good alternate solution in order to delete it
@@ -38,10 +39,11 @@ def del_path(nodes):
             n1.add_child(child) #Re-add the path back in which was deleted on lines 33-34 
             child.add_child(n1)
     priority, path = heapq.heappop(paths_to_delete) #get the most useless path
-    path[0].del_child(path[1]) #Delete the worst path by the ratio
-    path[1].del_child(path[0])
-    priority, path = heapq.heappop(paths_to_delete) #get the second most useless path
-    return(priority) #return the priority
+    if (priority <= limit and use_limit) or not use_limit:
+        path[0].del_child(path[1]) #Delete the worst path by the ratio
+        path[1].del_child(path[0])
+        return True
+    return False
 
 #make a function that is able to replace paths with better paths
 def replace_path(nodes):

@@ -4,12 +4,15 @@ from Draw import draw, get_paths
 from Determine_Path import check_paths, add_path, del_path, replace_path
 from Code_Tests import test_two
 from Utils import get_points, get_circle_points, get_nodes
+from progress.bar import Bar
+import time
 import random
 import math
 
 
 #points = get_circle_points(20, 300)
 
+start_time = time.perf_counter()
 points = get_points(100)
 
 us_metros = [
@@ -35,35 +38,24 @@ us_metros = [
     (179.9688, 23.055)    # Baltimore
 ]
 
-#points = us_metros
+# points = us_metros
 
 nodes = weighted_local(points)
 
 
 paths = get_paths(nodes) #Paths will be a list of tuples of Node objects (start node, end node)
 
-# for i in range(10):
-#     for i in range(5):
-#         add_path(nodes)
-#     del_path(nodes)
-
-should_add = True
-should_del = True
 count = 0
-while (should_add or should_del) and count < len(nodes)*4:
-    if should_add:
-        upper = add_path(nodes)
-    if should_del:
-        lower = del_path(nodes)
-    if upper <= 3.1:
-        should_add = False
-    else:
-        should_add = True
-    if lower >= 3.1:
-        should_del = False
-    else:
-        should_del = True
-    count+=1
+cont_add = True
+cont_del = True
+with Bar("start", max = len(nodes)*3, suffix ='%(percent).1f%% - %(eta)ds') as bar:
+    while (cont_add or cont_del) and count < len(nodes)*3:
+        cont_add = add_path(nodes, 3.1, True)
+        cont_del = del_path(nodes, 3.1, True)
+        count += 1
+        bar.next()
+        
+
 
 priority = replace_path(nodes)
 print(priority)
